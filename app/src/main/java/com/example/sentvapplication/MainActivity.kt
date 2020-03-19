@@ -32,9 +32,13 @@ class MainActivity : AppCompatActivity() {
             try {
                 openSettings()
             } catch (e: Exception) {
+                Log.e(TAG, "openSettings failed")
                 // Sometimes it needs two clicks.
-                openApp(PACKAGE_SETTINGS)
-                openApp(PACKAGE_SETTINGS)
+                thread {
+                    openApp(PACKAGE_SETTINGS)
+                    Thread.sleep(500)
+                    openApp(PACKAGE_SETTINGS)
+                }
             }
         }
         findViewById<Button>(R.id.btnOxygen).setOnClickListener { openApp(PACKAGE_OXYGEN) }
