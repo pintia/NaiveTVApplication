@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
             try {
                 openSettings()
             } catch (e: Exception) {
+                // Sometimes it needs two clicks.
+                openApp(PACKAGE_SETTINGS)
                 openApp(PACKAGE_SETTINGS)
             }
         }
