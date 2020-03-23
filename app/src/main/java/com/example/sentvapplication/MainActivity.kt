@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.github.kittinunf.fuel.httpGet
+import com.github.kittinunf.result.Result
 import kotlin.concurrent.thread
 
 
@@ -57,7 +59,27 @@ class MainActivity : AppCompatActivity() {
             thread {
                 Thread.sleep(5000)
                 if (autoOpen) {
+                    // Check Internet connection first, using the famous network testing site.
+                    var (_, _, result) = "https://www.baidu.com".httpGet().responseString()
+                    while (result is Result.Failure) {
+                        if (!autoOpen) {
+                            return@thread
+                        }
+                        runOnUiThread {
+                            Toast.makeText(this, R.string.wait_for_network, Toast.LENGTH_SHORT)
+                                .show()
+                            val textView = findViewById<TextView>(R.id.notice)
+                            textView.text = getString(R.string.wait_for_network)
+                        }
+                        Thread.sleep(1000)
+                        result = "https://www.baidu.com".httpGet().responseString().third
+                    }
                     openApp(PACKAGE_KIOSK)
+                    runOnUiThread {
+                        val textView = findViewById<TextView>(R.id.notice)
+                        textView.text = ""
+                    }
+                    autoOpen = false
                 }
             }
         }
@@ -76,8 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun openApp(packageName: String) {
         val launchIntent =
             packageManager.getLaunchIntentForPackage(packageName)
-        launchIntent?.let { startActivity(it) } ?:
-        runOnUiThread {
+        launchIntent?.let { startActivity(it) } ?: runOnUiThread {
             Toast.makeText(this, getString(R.string.no_app, packageName), Toast.LENGTH_LONG).show()
             val textView = findViewById<TextView>(R.id.notice)
             textView.text = getString(R.string.no_app, packageName)
