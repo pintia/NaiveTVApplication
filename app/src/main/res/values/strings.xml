@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SenTVApplication</string>
+    <string name="app_name">PAT Monitor</string>
     <string name="no_app">Cannot find %1$s, please install this.</string>
     <string name="will_open_kiosk">Will open Kiosk...</string>
     <string name="kiosk">Kiosk</string>
