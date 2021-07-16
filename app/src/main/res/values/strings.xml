@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">SenTVApplication</string>
+    <string name="app_name">PAT TV</string>
     <string name="no_app">Cannot find %1$s, please install this.</string>
-    <string name="will_open_kiosk">Will open Kiosk...</string>
+    <string name="will_open_kiosk">Will open Kiosk…</string>
     <string name="kiosk">Kiosk</string>
     <string name="settings">Settings</string>
-    <string name="oxygen">Oxygen Desktop</string>
+    <string name="launcher">Launcher</string>
     <string name="cancelled_auto_open">Cancelled auto open</string>
-    <string name="wait_for_network">Waiting for Internet connection...</string>
+    <string name="wait_for_network">Waiting for Internet connection…</string>
 </resources>

@@ -12,15 +12,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.Result
 import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = "SenTVApplication"
+    private val TAG = "PAT TV"
     private val PACKAGE_KIOSK = "de.ozerov.fully"
-    private val PACKAGE_OXYGEN = "com.yangqi.rom.launcher.free"
+    private val PACKAGE_LAUNCHER = "com.dangbei.tvlauncher"
     private val PACKAGE_SETTINGS = "com.xiaomi.mitv.settings"
 
     @Volatile
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        findViewById<Button>(R.id.btnOxygen).setOnClickListener { openApp(PACKAGE_OXYGEN) }
+        findViewById<Button>(R.id.btnLauncher).setOnClickListener { openApp(PACKAGE_LAUNCHER) }
         findViewById<Button>(R.id.btnKiosk).setOnClickListener { openApp(PACKAGE_KIOSK) }
 
         if (!isTaskRoot) {
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 if (autoOpen) {
                     // Check Internet connection first, using the famous network testing site.
                     var (_, _, result) = "https://www.baidu.com".httpGet().responseString()
-                    while (result is Result.Failure) {
+                    while (result.component2() != null) {
                         if (!autoOpen) {
                             return@thread
                         }
